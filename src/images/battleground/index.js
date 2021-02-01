@@ -1,0 +1,1 @@
+export { default as triangle } from './triangle.svg';
