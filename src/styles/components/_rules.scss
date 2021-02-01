@@ -1,0 +1,101 @@
+.rules {
+    &__btn {
+        text-transform: uppercase;
+        padding: 10px 32px;
+        border-radius: 10px;
+    }
+
+    &__wrapper {
+        display: none;
+        position: absolute;
+        width: max-content;
+        padding: 25px;
+        border-radius: 10px;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+
+        &.active { display: block }
+
+        .wrapper__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border: 1px solid purple;
+
+            span {
+                text-transform: uppercase;
+            }
+        }
+
+        .rules {
+            &--rps {
+                //display: none;
+                //position: absolute;
+                //top: 0;
+                border: 1px solid blue;
+            }
+
+            &--gcn {
+                .swiper-container {
+                    display: flex;
+                    position: relative;
+                    width: 100%;
+                    max-width: 500px;
+                    padding-bottom: 30px;
+                   // border: 1px solid black;
+
+                    .swiper-pagination {
+                        position: absolute;
+                        bottom: 0px;
+                    }
+
+
+                    .swiper-wrapper {
+                        .swiper-slide {
+                            display: flex;
+                            flex-direction: column;
+                            width: 100%; max-width: 100%;
+                            overflow: hidden;
+
+                            .rule {
+                                &__img__container {
+                                    background-color: #E1E4ED;
+                                    display: flex; max-height: 200px;
+                                    padding: 50px 0;
+
+                                    img {
+                                        position: relative;
+                                        max-height: 100%; max-width: 100%;
+                                        z-index: 3;
+                                    }
+                                }
+
+                                &__textbox {
+                                    position: relative;
+                                    text-align: center;
+                                    width: 100%;
+
+                                    &::after {
+                                        content: '';
+                                        background-image: url(../../images/GCN/curve.svg);
+                                        background-repeat: no-repeat;
+                                        background-size: 105% 150%;
+                                        position: absolute;
+                                        top: 0; left: -1%;
+                                        height: 150%; width: 101%;
+                                        transform: translateY(-100%);
+                                    }
+                                }
+                            }
+
+                            &.rule--5 {
+                                align-self: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

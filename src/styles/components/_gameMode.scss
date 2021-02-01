@@ -1,0 +1,37 @@
+.mode {
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    width: max-content;
+    margin: 0 auto;
+
+    button {
+        position: relative;
+        //border: 1px solid red;
+        border: 0;
+        height: 25px; width: 51px;
+        border-radius: 12px;
+        margin: 0 20px;
+
+        .slider {
+            position: absolute;
+            height: 19px; width: 19px;
+            border-radius: 50%;
+            top: 3px; left: 4px;
+            background-color: red;
+            transition: .5s;
+        }
+
+        &.active .slider {
+            left: 28px;
+        }
+    }
+
+    &__grizzly img {
+        max-width: 30px;
+    }
+
+    &__scissors img {
+        max-width: 27px;
+    }
+}

@@ -1,0 +1,45 @@
+.score {
+    //border: 1px solid red;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 15px;
+    padding: 20px;
+
+    &__textbox {
+        .textbox__container {
+            border: 1px solid purple;
+            position: relative;
+            width: max-content;
+
+            span {
+                position: absolute;
+                top: 0; right: 0;
+                height: 100%;
+                border: 1px solid red;
+                background-color: red;
+                width: 0%;
+                z-index: 2;         
+                
+                &.active {
+                    animation-play-state: running;
+                    animation: move 2s ease;
+                }
+
+                @keyframes move {
+                    from { width: 0% }
+                    40%, 55% { width: 100% }
+                    to { width: 0% }
+                }
+            }
+        }
+    }
+
+    &__number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+}
