@@ -2,17 +2,15 @@ import React, { useEffect, useContext, useState, useRef } from 'react';
 import { GameContext } from '../App';
 import { triangle } from '../images/battleground';
 import { rock, paper, scissors } from '../images/RPS';
-import { bear, cowboy, gcnRules, ninja } from '../images/GCN';
+import { grizzly, cowboy, ninja } from '../images/GCN';
 
 const Battleground = () => {
-    const { grizzlyMode } = useContext(GameContext);
-    const [playing, setIsPlaying] = useState(false);
-    const [playerWeapon, setPlayerWeapon] = useState();
-    const [computerWeapon, setComputerWeapon] = useState();
-    const [whoWon, setWhoWon] = useState();
+    const { grizzlyMode, rpsScore, setRpsScore, gcnScore, setGcnScore } = useContext(GameContext);
+    const [playing, setIsPlaying] = useState(false),
+          [playerWeapon, setPlayerWeapon] = useState(),
+          [computerWeapon, setComputerWeapon] = useState(),
+          [whoWon, setWhoWon] = useState();
     const weaponsRef = useRef([]);
-    //let computerWeapon;
-    //let playerWeapon;
 
     useEffect(() => {
         const haha = () => {
@@ -67,8 +65,11 @@ const Battleground = () => {
             || computerWeapon === 'cowboy' && playerWeapon === 'grizzly'
         ) {
             setWhoWon(-1)
-
-        } else setWhoWon(1)
+            setGcnScore(gcnScore - 1)            
+        } else {
+            setWhoWon(1)
+            setGcnScore(gcnScore + 1)
+        }
     }
 
     const determineWinnerRPS = () => {
@@ -84,37 +85,32 @@ const Battleground = () => {
         } else setWhoWon(1)
     }
 
-    console.log(`computer: ${computerWeapon}`)
-    console.log(`User: ${playerWeapon}`)
-    console.log(whoWon)
 
     return (
-        <div className="battleground">
+        <div className="battleground" onClick={() => sessionStorage.setItem('gcn', gcnScore)}>
             <img className={`triangle ${playing ? 'hi' : ''}`} src={triangle} alt="Triangle" />
             
-            <div 
-            className={`battleground__weapon ${grizzlyMode ? 'weapon--ninja' : 'weapon--rock'}`} 
-             data-selection={grizzlyMode ? 'ninja' : 'rock'}
-            >
+            <div className={`battleground__weapon ${grizzlyMode ? 'weapon--ninja' : 'weapon--rock'}`} data-selection={grizzlyMode ? 'ninja' : 'rock'}>
                 <span />
                 <img src={grizzlyMode ? ninja : rock} alt={`${grizzlyMode ? 'Ninja' : 'Rock'} selection`} /> 
             </div>
-            <div 
-            className={`battleground__weapon ${grizzlyMode ? 'weapon--bear' : 'weapon--paper'}`} 
-             data-selection={grizzlyMode ? 'grizzly' : 'paper'}
-            >
+            <div className={`battleground__weapon ${grizzlyMode ? 'weapon--bear' : 'weapon--paper'}`} data-selection={grizzlyMode ? 'grizzly' : 'paper'}>
                 <span />
-                <img src={grizzlyMode ? bear : paper} alt={`${grizzlyMode ? 'Bear' : 'Paper'} selection`} />
+                <img src={grizzlyMode ? grizzly : paper} alt={`${grizzlyMode ? 'Bear' : 'Paper'} selection`} />
             </div>
-            <div 
-            className={`battleground__weapon ${grizzlyMode ? 'weapon--cowboy' : 'weapon--scissors'}`} 
-             data-selection={grizzlyMode ? 'cowboy' : 'scissors'}
-            >
+            <div className={`battleground__weapon ${grizzlyMode ? 'weapon--cowboy' : 'weapon--scissors'}`}  data-selection={grizzlyMode ? 'cowboy' : 'scissors'}>
                 <span />
                 <img src={grizzlyMode ? cowboy : scissors} alt={`${grizzlyMode ? 'Cowboy' : 'Scissors'} selection`} />
-            </div>    
+            </div>  
 
-            <div className="battleground__result">
+            {playing && (
+                <>
+                <div className="battleground__opponent">
+                    <span>The house picked</span>
+                    <img src={require(`../images/${grizzlyMode ? 'GCN' : 'RPS'}/icon-${computerWeapon}.svg`).default} /> 
+                </div> 
+
+                <div className="battleground__result">
                 <h3>{whoWon === 0
                         ? `It's a tie!`
                             : whoWon === 1
@@ -130,7 +126,9 @@ const Battleground = () => {
                             }
                         </span>
                     )}
-            </div>   
+                </div>  
+                </>
+            )} 
         </div>
     )
 }
