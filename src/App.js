@@ -7,7 +7,7 @@ export const GameContext = createContext();
 const App = () => {
     const [rpsScore, setRpsScore] = useState(sessionStorage.getItem('rps')),
           [gcnScore, setGcnScore] = useState(sessionStorage.getItem('gcn')),
-          [grizzlyMode, setGrizzlyMode] = useState(true),
+          [grizzlyMode, setGrizzlyMode] = useState(sessionStorage.getItem('mode') === 'grizzly' ? true : false),
           [transition, setTransition] = useState(false);
 
     useEffect(() => {

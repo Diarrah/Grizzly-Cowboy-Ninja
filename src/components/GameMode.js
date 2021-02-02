@@ -6,12 +6,29 @@ import scissors from '../images/scissors.svg';
 const GameMode = () => {
     const { transition, setTransition, grizzlyMode, setGrizzlyMode } = useContext(GameContext);
 
-    const doThis = () => {
-        setTimeout(() => {
-            setGrizzlyMode(!grizzlyMode)
-        }, 1200);
-        setTransition(!transition)
+    useEffect(() => {
+        if (!sessionStorage.getItem('mode')) {
+            setGrizzlyMode(true)
+            sessionStorage.setItem('mode', 'grizzly')
+        } 
+    }, [])
+
+    const switchMode = () => {
+        if (!grizzlyMode) {
+            sessionStorage.setItem('mode', 'grizzly')
+            setGrizzlyMode(true)
+        } else {
+            sessionStorage.setItem('mode', 'scissors')
+            setGrizzlyMode(false)
+        }
     }
+
+    // const doThis = () => {
+    //     setTimeout(() => {
+    //         setGrizzlyMode(!grizzlyMode)
+    //     }, 1200);
+    //     setTransition(!transition)
+    // }
 
     return (
         <div className="mode">
@@ -21,7 +38,7 @@ const GameMode = () => {
             <button 
                 className={`grizzly__mode${transition ? ' active': ''}`}
                 aria-label="Button to change game mode"
-                onClick={() => doThis()}
+                onClick={() => switchMode()}
                 type="button"
             >
                 <span className="slider" />
