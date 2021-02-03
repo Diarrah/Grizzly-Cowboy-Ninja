@@ -1,16 +1,14 @@
-import React, { useEffect, useContext, useState, useRef } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { GameContext } from '../App';
+import { RetryBtn } from './';
 import { triangle } from '../images/battleground';
 import { rock, paper, scissors } from '../images/RPS';
 import { grizzly, cowboy, ninja } from '../images/GCN';
 
 const Battleground = () => {
-    const { grizzlyMode, rpsScore, setRpsScore, gcnScore, setGcnScore } = useContext(GameContext);
-    const [playing, setIsPlaying] = useState(false),
-          [playerWeapon, setPlayerWeapon] = useState(),
-          [computerWeapon, setComputerWeapon] = useState(),
+    const { grizzlyMode, rpsScore, setRpsScore, gcnScore, setGcnScore, playing, setPlaying, playerWeapon, setPlayerWeapon, weaponsRef } = useContext(GameContext);
+    const [computerWeapon, setComputerWeapon] = useState(),
           [whoWon, setWhoWon] = useState();
-    const weaponsRef = useRef([]);
 
     useEffect(() => {
         const haha = () => {
@@ -28,7 +26,7 @@ const Battleground = () => {
 
             weapons.forEach(weapon => weapon.addEventListener('click', (e) => {
                 yesTheGameIsPlaying(e);
-                setIsPlaying(true)
+                setPlaying(true)
             }))
 
             weaponsRef.current = weapons;
@@ -38,22 +36,27 @@ const Battleground = () => {
     }, [])
 
     useEffect(() => {
-        grizzlyMode ? determineWinnerGCN() : determineWinnerRPS()
-    }, [playing])
+        if (playing && playerWeapon) {
+            grizzlyMode 
+                ? determineWinnerGCN() 
+                : determineWinnerRPS()
+        }
+    }, [playerWeapon && playing])
+
 
     const yesTheGameIsPlaying = (e) => {
-        weaponsRef.current.forEach(thing => {
-            if (thing !== e.target) {
-                thing.style.display = 'none'
-
+        weaponsRef.current.forEach(option => {
+            if (option === e.target) {
+                option.classList.add('playing') 
+                setPlayerWeapon(e.target.dataset.selection)
             } else {
-                thing.classList.add('playing') 
-                setPlayerWeapon(e.target.dataset.selection);
+                option.classList.add('hidden')
             }
 
-            if (thing.classList.contains('playing')) thing.children[0].innerText = `You Picked`        
+            if (option.classList.contains('playing')) option.children[0].innerText = `You Picked`        
         })
     }
+    
 
     const determineWinnerGCN = () => {
         if (computerWeapon === playerWeapon) setWhoWon(0)
@@ -66,12 +69,14 @@ const Battleground = () => {
             setWhoWon(-1)
             setTimeout(() => {
                 setGcnScore(gcnScore - 1)
+                sessionStorage.setItem('gcn', Number(gcnScore - 1))
             }, 2500);
                         
         } else {
             setWhoWon(1)
             setTimeout(() => {
                 setGcnScore(gcnScore + 1)
+                sessionStorage.setItem('gcn', Number(gcnScore + 1))
             }, 2500);
         }
     }
@@ -87,19 +92,21 @@ const Battleground = () => {
             setWhoWon(-1)
             setTimeout(() => {
                 setRpsScore(rpsScore - 1)
+                sessionStorage.setItem('rps', Number(rpsScore - 1))
             }, 2500);
 
         } else { 
             setWhoWon(1)
             setTimeout(() => {
                 setRpsScore(rpsScore + 1)
+                sessionStorage.setItem('rps', Number(rpsScore + 1))
             }, 2500);
         }
     }
 
 
     return (
-        <div className="battleground" onClick={() => sessionStorage.setItem('gcn', gcnScore)}>
+        <div className="battleground">
             <img className={`triangle ${playing ? 'hidden' : ''}`} src={triangle} alt="Triangle" />
             
             <div className={`battleground__weapon ${grizzlyMode ? 'weapon--ninja' : 'weapon--rock'}`} data-selection={grizzlyMode ? 'ninja' : 'rock'}>
@@ -140,6 +147,7 @@ const Battleground = () => {
                             }
                         </span>
                     )}
+                    <RetryBtn />
                 </div>  
                 </>
             )} 
