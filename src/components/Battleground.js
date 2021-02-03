@@ -41,7 +41,6 @@ const Battleground = () => {
         grizzlyMode ? determineWinnerGCN() : determineWinnerRPS()
     }, [playing])
 
-
     const yesTheGameIsPlaying = (e) => {
         weaponsRef.current.forEach(thing => {
             if (thing !== e.target) {
@@ -65,10 +64,15 @@ const Battleground = () => {
             || computerWeapon === 'cowboy' && playerWeapon === 'grizzly'
         ) {
             setWhoWon(-1)
-            setGcnScore(gcnScore - 1)            
+            setTimeout(() => {
+                setGcnScore(gcnScore - 1)
+            }, 2500);
+                        
         } else {
             setWhoWon(1)
-            setGcnScore(gcnScore + 1)
+            setTimeout(() => {
+                setGcnScore(gcnScore + 1)
+            }, 2500);
         }
     }
 
@@ -81,14 +85,22 @@ const Battleground = () => {
             || computerWeapon === 'scissors' && playerWeapon === 'paper'
         ) {
             setWhoWon(-1)
+            setTimeout(() => {
+                setRpsScore(rpsScore - 1)
+            }, 2500);
 
-        } else setWhoWon(1)
+        } else { 
+            setWhoWon(1)
+            setTimeout(() => {
+                setRpsScore(rpsScore + 1)
+            }, 2500);
+        }
     }
 
 
     return (
         <div className="battleground" onClick={() => sessionStorage.setItem('gcn', gcnScore)}>
-            <img className={`triangle ${playing ? 'hi' : ''}`} src={triangle} alt="Triangle" />
+            <img className={`triangle ${playing ? 'hidden' : ''}`} src={triangle} alt="Triangle" />
             
             <div className={`battleground__weapon ${grizzlyMode ? 'weapon--ninja' : 'weapon--rock'}`} data-selection={grizzlyMode ? 'ninja' : 'rock'}>
                 <span />
@@ -105,9 +117,11 @@ const Battleground = () => {
 
             {playing && (
                 <>
-                <div className="battleground__opponent">
-                    <span>The house picked</span>
-                    <img src={require(`../images/${grizzlyMode ? 'GCN' : 'RPS'}/icon-${computerWeapon}.svg`).default} /> 
+                <div className={`battleground__opponent ${computerWeapon}`}>
+                <svg className={`circle ${computerWeapon}`} width="130" height="130" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M65 7.5C96.7564 7.5 122.5 33.2436 122.5 65C122.5 96.7564 96.7564 122.5 65 122.5C33.2436 122.5 7.5 96.7564 7.5 65C7.5 33.2436 33.2436 7.5 65 7.5Z" stroke="#E1E4ED" strokeWidth="12"/>
+                </svg>
+                    <img src={require(`../images/${grizzlyMode ? 'GCN' : 'RPS'}/icon-${computerWeapon}.svg`).default} alt={`${computerWeapon} selection`} /> 
                 </div> 
 
                 <div className="battleground__result">
