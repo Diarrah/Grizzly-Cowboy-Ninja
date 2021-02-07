@@ -45,7 +45,7 @@ const Battleground = () => {
         weaponsRef.current.forEach(option => {
             if (option === e.target) {
                 option.classList.add('playing') 
-                setPlayerWeapon({ color: e.target.dataset.color, selection: e.target.dataset.selection })
+                setPlayerWeapon(e.target.dataset.color)
             } else {
                 option.classList.add('hidden')
             }
@@ -55,12 +55,12 @@ const Battleground = () => {
     }
     
     const determineWinner = () => {
-        if (computerWeapon === playerWeapon.color) setWhoWon(0)
+        if (computerWeapon === playerWeapon) setWhoWon(0)
 
         else if (
-            computerWeapon === 'red' && playerWeapon.color === 'yellow'
-            || computerWeapon === 'blue' && playerWeapon.color === 'red'
-            || computerWeapon === 'yellow' && playerWeapon.color === 'blue'
+            computerWeapon === 'red' && playerWeapon === 'yellow'
+            || computerWeapon === 'blue' && playerWeapon === 'red'
+            || computerWeapon === 'yellow' && playerWeapon === 'blue'
         ) {
             setWhoWon(-1)
             setTimeout(() => {
@@ -104,18 +104,15 @@ const Battleground = () => {
         <div className="battleground">
             <img className={`triangle ${playing ? 'hidden' : ''}`} src={triangle} alt="Triangle" />
             
-            <div className="battleground__weapon weapon--red" 
-                 data-color="red" data-selection={grizzlyMode ? 'ninja' : 'rock'}>
+            <div className="battleground__weapon weapon--red" data-color="red">
                 <span />
                 <img src={grizzlyMode ? red1 : red2} alt={`${grizzlyMode ? 'Ninja' : 'Rock'} selection`} /> 
             </div>
-            <div className="battleground__weapon weapon--blue"
-                 data-color="blue" data-selection={grizzlyMode ? 'grizzly' : 'paper'}>
+            <div className="battleground__weapon weapon--blue" data-color="blue">
                 <span />
                 <img src={grizzlyMode ? blue1 : blue2} alt={`${grizzlyMode ? 'Bear' : 'Paper'} selection`} />
             </div>
-            <div className="battleground__weapon weapon--yellow"  
-                 data-color="yellow" data-selection={grizzlyMode ? 'cowboy' : 'scissors'}>
+            <div className="battleground__weapon weapon--yellow" data-color="yellow">
                 <span />
                 <img src={grizzlyMode ? yellow1 : yellow2} alt={`${grizzlyMode ? 'Cowboy' : 'Scissors'} selection`} />
             </div>  
@@ -135,13 +132,12 @@ const Battleground = () => {
                         : whoWon === 1
                             ? `You win`
                             : `You lose`
-
                     }</h3>
                     {whoWon !== 0 && (
                         <span>
                             {whoWon === 1
-                                ? `${playerWeapon.selection} beats ${correctName(computerWeapon)}`
-                                : `${correctName(computerWeapon)} beats ${playerWeapon.selection}`
+                                ? `${correctName(playerWeapon)} beats ${correctName(computerWeapon)}`
+                                : `${correctName(computerWeapon)} beats ${correctName(playerWeapon)}`
                             }
                         </span>
                     )}
