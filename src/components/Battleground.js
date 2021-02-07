@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useRef } from 'react';
 import { GameContext } from '../App';
 import { RetryBtn } from './';
 import { triangle } from '../images/battleground';
@@ -15,13 +15,12 @@ const Battleground = () => {
         weaponsRef } = useContext(GameContext);
 
     const [whoWon, setWhoWon] = useState(),
-          [playerWeapon, setPlayerWeapon] = useState();
-
+          [playerWeapon, setPlayerWeapon] = useState();      
 
     useEffect(() => {
         let weapons = Array.from(document.querySelectorAll('.battleground__weapon')),
             options = ['red', 'blue', 'yellow'];
-        
+
         weaponsRef.current = weapons;
 
         (function(){
@@ -127,7 +126,7 @@ const Battleground = () => {
                 </div> 
 
                 <div className="battleground__result">
-                <h3>{whoWon === 0
+                    <h3>{whoWon === 0
                         ? `It's a tie!`
                         : whoWon === 1
                             ? `You win`
@@ -142,6 +141,12 @@ const Battleground = () => {
                         </span>
                     )}
                     <RetryBtn />
+                    {whoWon === 1 && (
+                        <div className={`confetti${whoWon === 1 ? ' active' : ''}`}>
+                            <lottie-player src="https://assets4.lottiefiles.com/temp/lf20_9xt8zC.json"  
+                            background="transparent" speed=".75" autoplay loop />
+                        </div>                         
+                    )}             
                 </div>  
                 </>
             )} 
