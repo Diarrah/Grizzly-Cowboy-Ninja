@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useRef } from 'react';
-import { GameMode, Score, Battleground, Rules } from './components';
+import { GameMode, Score, Battleground, Rules, Reset } from './components';
 import './App.scss';
 
 export const GameContext = createContext();
@@ -44,6 +44,7 @@ const App = () => {
                 <Score />
                 <Battleground />
                 <Rules />
+                <Reset />
             </div>
         </GameContext.Provider>
     );
