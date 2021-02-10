@@ -1,72 +1,76 @@
 .rules {
-    &__btn {
-        text-transform: uppercase;
-        padding: 10px 32px;
-        border-radius: 10px;
-    }
-
     &__wrapper {
         display: none;
-        position: absolute;
+        position: fixed;
         width: max-content;
-        padding: 25px;
+        padding: 25px 40px;
         border-radius: 10px;
         top: 50%; left: 50%;
         transform: translate(-50%, -50%);
-
-        &.active { display: block }
+        background-color: white;
+        z-index: 10;
+            &.active { display: block }
 
         .wrapper__header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            border: 1px solid purple;
+            font-weight: 700;
+            padding: 0 20px;
+
+            button {
+                background-color: transparent;
+                border: 0;
+                transition: .35s;
+                    &:hover { transform: rotate(90deg) }
+            }
 
             span {
                 text-transform: uppercase;
+                color: hsl(229, 25%, 31%);
+                font-size: 1.5em;
             }
         }
 
         .rules {
-            &--rps {
-                //display: none;
-                //position: absolute;
-                //top: 0;
-                border: 1px solid blue;
-            }
-
             &--gcn {
                 .swiper-container {
                     display: flex;
                     position: relative;
-                    width: 100%;
-                    max-width: 500px;
-                    padding-bottom: 30px;
-                   // border: 1px solid black;
+                    height: 400px; width: 400px;
+                    padding-bottom: 20px;
+                    border-radius: 10px;
 
                     .swiper-pagination {
                         position: absolute;
+                        display: block;
                         bottom: 0px;
-                    }
 
+                        &-bullet {
+                            border: 1px solid hsl(229, 25%, 31%);
+                            background-color: transparent;
+                                &-active { background-color: hsl(229, 25%, 31%) }
+                        }
+                    }
 
                     .swiper-wrapper {
                         .swiper-slide {
                             display: flex;
                             flex-direction: column;
-                            width: 100%; max-width: 100%;
                             overflow: hidden;
 
                             .rule {
                                 &__img__container {
                                     background-color: #E1E4ED;
-                                    display: flex; max-height: 200px;
-                                    padding: 50px 0;
+                                    display: flex; max-height: 300px;
+                                    padding: 30px 0;
+                                    height: 70%;
+                                    border-radius: 0 0 8px 8px;
 
                                     img {
                                         position: relative;
-                                        max-height: 100%; max-width: 100%;
+                                        height: 100%; width: 100%;
                                         z-index: 3;
                                     }
                                 }
@@ -75,6 +79,30 @@
                                     position: relative;
                                     text-align: center;
                                     width: 100%;
+                                    padding: 0 50px;
+
+                                    span {
+                                        text-transform: uppercase;
+                                        font-weight: 700;
+                                        color: hsl(229, 25%, 31%);
+
+                                        &:nth-of-type(1) {
+                                            font-size: 1em;
+                                            letter-spacing: 4px;
+                                        }
+
+                                        &:nth-of-type(2) {
+                                             font-size: 1.25em;
+                                             letter-spacing: 6px;
+                                        }
+                                    }
+
+                                    p {
+                                        font-family: 'Karla', sans-serif;
+                                        font-size: .9em;
+                                        line-height: 1;
+                                        margin: 5px 0;
+                                    }
 
                                     &::after {
                                         content: '';
@@ -82,18 +110,112 @@
                                         background-repeat: no-repeat;
                                         background-size: 105% 150%;
                                         position: absolute;
-                                        top: 0; left: -1%;
+                                        top: 1px; left: -1%;
                                         height: 150%; width: 101%;
                                         transform: translateY(-100%);
                                     }
                                 }
                             }
 
-                            &.rule--5 {
-                                align-self: center;
+                            &.rule--1 {
+                                align-items: center;
+                                border-radius: 10px;
+                                font-family: 'Karla', sans-serif;
+                                box-shadow: inset 0px -3px 10px hsla(229, 25%, 31%, .25);
+
+                                p {
+                                    text-align: center;
+                                    font-size: 1.2em;
+                                    padding: 20px;
+                                    border-radius: 10px;
+                                    height: max-content;
+                                    margin: auto;                                 
+        
+                                    span { 
+                                        display: block;
+                                        text-transform: uppercase;
+                                        font-family: 'Barlow Semi Condensed', sans-serif;
+                                        font-weight: 700;
+                                        letter-spacing: 3px;
+                                    }
+
+                                    hr {
+                                        border: 0;
+                                        height: .9px; width: 80%;
+                                        background-color: #3B4363;
+                                        margin: 0 auto;
+                                    }
+
+                                    small {
+                                        display: inline-block;
+                                        font-size: .7em;
+                                        transform: translateY(-5px);
+                                    }
+
+                                    .arrow {
+                                        animation: move 2s infinite alternate;
+
+                                        @keyframes move {
+                                            to { transform: translateX(30px) }
+                                        }
+                                    }
+                                }
+                            }
+
+                            &.rule--5 img {
+                                height: 90%; width: 90%;
+                                margin: auto;  
                             }
                         }
                     }
+                }
+            }
+        }
+
+        @media screen and (max-width: 590px) {
+            padding: 15px 30px;
+
+            .rules {
+                &--gcn {
+                    .swiper-container {
+                        width: 70vw; 
+                        min-width: 220px; max-width: 100%;
+
+                        .swiper-wrapper {
+                            .swiper-slide {
+                                .rule {
+                                    &__img__container {
+                                        max-height: 200px;
+                                        padding: 15px 0;
+
+                                        img {
+                                            width: 90%; height: 90%;
+                                            margin: 0 auto;
+                                        }
+                                    }
+
+                                    &__textbox {
+                                        padding: 20px 10px;
+
+                                        &::after {
+                                            transform: translateY(-83%)
+                                        }
+
+                                        span { white-space: nowrap }
+                                    }
+                                }
+
+                                &.rule--1 {
+                                    p {
+                                        font-size: .95em;
+                                        padding: 10px;
+                                    } 
+
+                                    svg { max-width: 120px }
+                                }
+                            }
+                        }
+                    }    
                 }
             }
         }

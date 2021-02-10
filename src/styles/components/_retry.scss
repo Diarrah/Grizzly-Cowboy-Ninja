@@ -1,0 +1,20 @@
+.retry__btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    padding: 10px 0;
+    border-radius: 5px;
+    border: 0;
+    background-color: white;
+    color: hsl(229, 25%, 31%);
+
+    &:active {
+        transform: scale(.98);
+    }
+
+    &:hover {
+        color: rgb(202, 14, 14); 
+    }
+}

@@ -1,70 +1,460 @@
 .battleground {
     position: relative;
-    border: 1px solid rebeccapurple;
     width: max-content;
-    margin: 0 auto;
-    height: 40vw; width: 40vw;
+    margin: 150px auto 100px;
+    height: 30vw; width: 30vw;
 
     .triangle {
         width: 100%; height: 100%;
-        border: 1px solid red;
-        &.hidden { display: none; }
+            &.hidden { display: none }
     }
+
+    .reset { display: none }
 
     &__weapon {
         position: absolute;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 120px; width: 120px;
+        height: 150px; width: 150px;
         border-radius: 50%;
         background-color: white;
         border: 15px solid;
+        cursor: pointer;
+            &.hidden { display: none }
 
         span {
             text-transform: uppercase;
             position: absolute;
-            top: -50px;
+            font-weight: 700;
+            font-size: .9em;
+            top: -60px;
+            color: white;
+            letter-spacing: 1px;
         }
 
-        img {  
-            pointer-events: none;
-        }
+        img { pointer-events: none }
 
         &.weapon {
-            &--rock, &--ninja {
+            &--red {
                 bottom: 0; left: 50%;
                 transform: translateX(-50%) translateY(50%);
                 border-color: hsl(349, 70%, 56%);
                 box-shadow: 0 8px hsl(349, 71%, 52%), inset 0 5px rgba(black, .15);
-
-                &.playing {
-                    left: 0; top: 50%;
-                    transform: translateX(-50%) translateY(-50%) scale(1.5);
-                }
             }
 
-            &--paper, &--bear {
+            &--blue {
                 top: 0; left: 0;
                 transform: translateX(-50%) translateY(-50%);
                 border-color: hsl(230, 89%, 65%);
                 box-shadow: 0px 8px hsl(230, 89%, 62%), inset 0 5px rgba(black, .15);
-
-                &.playing {
-                    top: 50%;
-                    transform: translateX(-50%) translateY(-50%) scale(1.5);
-                }
             }
 
-            &--scissors, &--cowboy {
+            &--yellow {
                 top: 0; right: 0;
                 transform: translateX(50%) translateY(-50%);
                 border-color:hsl(40, 84%, 53%);
                 box-shadow: 0px 8px hsl(39, 89%, 49%), inset 0 5px rgba(black, .15);                
+            }
 
+            &--red, &--blue, &--yellow {
                 &.playing {
-                   top: 50%; left: 0;
-                   transform: translateX(-50%) translateY(-50%) scale(1.5);
+                    display: flex;
+                    top: 50%; left: 0;
+                    transform: translateX(-50%) translateY(-50%) scale(1.5);
+                    pointer-events: none;
+                    animation: moveLeft .5s forwards 2.5s;
+                }
+            }
+            
+            @keyframes moveLeft {
+                to { transform: translateX(-100%) translateY(-50%) scale(1.5) }
+            }
+        }
+
+        @media screen and (min-width: 1440px) {
+            height: 200px; width: 200px;
+
+            span {
+                font-size: 1.3em;
+                top: -90px;
+                letter-spacing: 2px;
+            }
+
+            &.weapon {
+                &--red {
+                    box-shadow: 0 12px hsl(349, 71%, 52%), inset 0 8px rgba(black, .15);
+                    img { width: 60% }
+                }
+
+                &--blue {
+                    box-shadow: 0px 12px hsl(230, 89%, 62%), inset 0 8px rgba(black, .15);
+                    img { width: 50% }
+                }
+
+                &--yellow {
+                    box-shadow: 0px 12px hsl(39, 89%, 49%), inset 0 8px rgba(black, .15);  
+                    img { width: 55% }
+                }
+            }
+        }
+        
+        @media screen and (max-width: 1050px) {
+            @keyframes moveLeft {
+                to { transform: translateX(-140%) translateY(-50%) scale(1.5) }
+            }
+        }
+    }
+
+    &__opponent {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        height: 120px; width: 120px;
+        top: 50%; right: 0;
+        border-radius: 50%;
+        transform: translateX(50%) translateY(-50%) scale(1.5);
+        background-color: rgba(black, .2);
+        box-shadow: 0 7px 0 14px transparent;
+
+        @keyframes moveRight {
+            to { transform: translateX(110%) translateY(-50%) scale(1.5) }
+        }
+
+        &.blue {
+            animation: blue-border .5s forwards 2.25s, 
+                       moveRight .5s forwards 2.5s;
+        }
+
+        &.red {
+            animation: red-border .5s forwards 2.25s, 
+                       moveRight .5s forwards 2.5s;
+        }
+
+        &.yellow {
+            animation: yellow-border .5s forwards 2.25s, 
+                       moveRight .5s forwards 2.5s;
+        }
+
+        img {
+            animation: reveal .5s forwards 2.25s;
+            opacity: 0;
+            transform: scale(.4);
+
+            @keyframes reveal {
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        }
+
+        &::after {
+            content: 'THE HOUSE PICKED';
+            position: absolute;
+            top: -60px;
+            white-space: nowrap;
+            color: white;
+            letter-spacing: 1px;
+            font-size: .9em;
+            font-weight: 700;
+        }
+
+        .circle {
+            position: absolute;
+            height: 151px; width: 151px;
+            border-radius: 50%;
+
+            path { stroke-dashoffset: 0 }
+
+            &.blue path {
+                animation: draw-line 2s forwards, 
+                           fill-line-blue .5s forwards 2.1s;
+            }
+
+            &.red path {
+                animation: draw-line 2s forwards, 
+                           fill-line-red .5s forwards 2.1s;
+            }
+
+            &.yellow path {
+                animation: draw-line 2s forwards, 
+                           fill-line-yellow .5s forwards 2.1s;
+            }
+
+            @keyframes draw-line {
+                 0% {
+                    stroke-dasharray: 0 361;
+                } 100% {
+                    stroke-dasharray: 361 0;
+                }
+            }
+
+            @keyframes fill-line-blue {
+                to { stroke: hsl(230, 89%, 65%) }
+            }
+
+            @keyframes fill-line-yellow {
+                to { stroke: hsl(40, 84%, 53%) }
+            }
+
+            @keyframes fill-line-red {
+                to { stroke: hsl(349, 70%, 56%) }
+            }
+
+            @keyframes blue-border {
+                to {
+                    background-color: #fff;
+                    box-shadow: 0 7px 0 14px hsl(230, 89%, 62%), inset 0 5px rgba(black, .15);
+                }
+            }
+
+            @keyframes red-border {
+                to {
+                    background-color: #fff;
+                    box-shadow: 0 7px 0 14px  hsl(349, 71%, 52%), inset 0 5px rgba(black, .15);
+                }
+            }
+
+            @keyframes yellow-border {
+                to {
+                    background-color: #fff;
+                    box-shadow: 0 7px 0 14px hsl(39, 89%, 49%), inset 0 5px rgba(black, .15);
+                }
+            }
+        }
+
+        @media screen and (min-width: 1440px) {
+            transform: translateX(50%) translateY(-50%) scale(2.2);
+            box-shadow: 0 8px 0 11px transparent;
+
+            .circle path {
+                stroke-width: 9;
+                transform: scale(.98);
+                transform-origin: 50% 50%;
+            }
+
+            &.yellow img { width: 55% }
+            &.blue img { width: 50% }
+            &.red img { width: 60% }
+
+            @keyframes moveRight {
+                to { transform: translateX(130%) translateY(-50%) scale(2.2) }
+            }
+
+            @keyframes blue-border {
+                to {
+                    background-color: #fff;
+                    box-shadow: 0 8px 0 11px hsl(230, 89%, 62%), inset 0 6px rgba(black, .15);
+                }
+            }
+
+            @keyframes red-border {
+                to {
+                    background-color: #fff;
+                    box-shadow: 0 8px 0 11px  hsl(349, 71%, 52%), inset 0 6px rgba(black, .15);
+                }
+            }
+
+            @keyframes yellow-border {
+                to {
+                    background-color: #fff;
+                    box-shadow: 0 8px 0 11px hsl(39, 89%, 49%), inset 0 6px rgba(black, .15);
+                }
+            }
+        }
+
+        @media screen and (max-width: 1050px) {
+            @keyframes moveRight {
+                to { transform: translateX(160%) translateY(-50%) scale(1.5) }
+            }
+        }
+
+        @media screen and (max-width: 590px) {
+            transform: translateX(50%) translateY(-50%) scale(.85);
+
+            &::after {
+                bottom: -87px !important;
+                font-size: 1.25em;
+                white-space: pre-wrap;
+                text-align: center;
+                font-weight: 600;
+            }
+
+            &.red img { width: 62%; }
+            &.blue img { width: 62% }
+            &.yellow img { width: 61% }
+
+            @keyframes blue-border {
+                to {
+                    background-color: #fff;
+                    box-shadow: 0 10px 0 14px hsl(230, 89%, 62%), inset 0 6px rgba(black, .15);
+                }
+            }
+
+            @keyframes red-border {
+                to {
+                    background-color: #fff;
+                    box-shadow: 0 10px 0 14px  hsl(349, 71%, 52%), inset 0 6px rgba(black, .15);
+                }
+            }
+
+            @keyframes yellow-border {
+                to {
+                    background-color: #fff;
+                    box-shadow: 0 10px 0 14px hsl(39, 89%, 49%), inset 0 6px rgba(black, .15);
+                }
+            }
+        }
+    }
+
+    &__result {
+        position: absolute;
+        text-align: center;
+        color: white;
+        text-transform: uppercase;
+        width: max-content;
+        top: 50%; left: 50%;
+        transform: translateX(-50%) translateY(-50%) scale(.35);
+        opacity: 0;
+        pointer-events: none;
+        animation: enlarge .45s forwards 2.5s;
+        
+        h3 {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 2.75em;
+            text-shadow: 1px 3px 1px rgba(black, .5);
+        }
+
+        span {
+            font-size: .85em;
+            letter-spacing: 1px;
+            font-family: 'Karla', sans-serif;
+        }
+
+        @keyframes enlarge {
+            to {
+                transform: translateX(-50%) translateY(-50%) scale(1);
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            z-index: -2;
+            top: -90%;
+            transform: scale(2.5);
+
+            &.active {
+                animation: hide .5s forwards 4500ms;
+                @keyframes hide {
+                    to { opacity: 0 }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 940px) {
+        width: 40vw; height: 40vw;
+            &.move-up { margin: 50px auto 250px }
+
+        &__weapon {
+            span {
+               top: auto; bottom: -80px;
+            }
+
+            &.weapon {
+                &--red, &--blue, &--yellow {
+                    &.playing { animation: none }
+                }
+            }
+        }
+
+        .reset { display: block }
+
+        &__opponent {
+            &.blue { 
+                animation: blue-border .5s forwards 2.25s; 
+
+                &.gray {
+                    animation: blue-border .5s forwards 2.25s,
+                               loser .75s forwards 2.25s;
+                }
+            }
+
+            &.red { 
+                animation: red-border .5s forwards 2.25s; 
+
+                &.gray {
+                    animation: red-border .5s forwards 2.25s,
+                               loser .75s forwards 2.25s;
+                }
+            }
+
+            &.yellow { 
+                animation: yellow-border .5s forwards 2.25s;
+
+                &.gray {
+                    animation: yellow-border .5s forwards 2.25s,
+                               loser .75s forwards 2.25s;
+                }
+            }
+
+            &::after {
+                top: auto; bottom: -80px;
+            }
+        }
+
+        &__result {
+            width: 100%;
+            transform: translateX(-50%) translateY(220%) scale(.35);
+            top: auto; bottom: 0;
+
+            @keyframes enlarge {
+                to {
+                    transform: translateX(-50%) translateY(220%) scale(1);
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 590px) {
+        &__weapon {
+            height: 100px; width: 100px;
+            border: 8px solid;
+
+            span { 
+                bottom: -60px;
+                text-align: center;
+                font-weight: 600;
+            }
+
+            &.weapon {
+                &--red, &--blue, &--yellow {
+                    &.playing {
+                        transform: translateX(-50%) translateY(-50%) scale(1.25);
+                    }
+
+                    img { min-height: 60%; max-width: 60%; }
+                }
+            }
+        }
+
+        &__result { 
+            width: 70vw;
+            transform: translateX(-50%) translateY(160%) scale(.35);
+            top: auto; bottom: 0;
+
+            @keyframes enlarge {
+                to {
+                    transform: translateX(-50%) translateY(160%) scale(1);
+                    opacity: 1;
+                    pointer-events: auto;
                 }
             }
         }
