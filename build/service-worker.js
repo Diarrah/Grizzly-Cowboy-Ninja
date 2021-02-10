@@ -1,4 +1,6 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.4/workbox-sw.js');
+workbox.setConfig({debug: false});
+
 workbox.precaching
     .precacheAndRoute([
         {"revision":"d474ebc016a346cda811439a7c99d05e","url":"desktop-preview.jpg"},
