@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { GameContext } from '../App';
 import { RetryBtn } from './';
 import { triangle } from '../images/battleground';
@@ -14,8 +14,8 @@ const Battleground = () => {
         computerWeapon, setComputerWeapon,
         weaponsRef } = useContext(GameContext);
 
-    const [whoWon, setWhoWon] = useState(),
-          [playerWeapon, setPlayerWeapon] = useState();      
+    const [playerWeapon, setPlayerWeapon] = useState(),
+          [whoWon, setWhoWon] = useState();      
 
     useEffect(() => {
         let weapons = Array.from(document.querySelectorAll('.battleground__weapon')),
@@ -38,7 +38,7 @@ const Battleground = () => {
     useEffect(() => {
         playing && determineWinner()
     }, [playing])
- 
+
 
     const beginTheBattle = (e) => {
         weaponsRef.current.forEach(option => {
@@ -100,7 +100,7 @@ const Battleground = () => {
 
 
     return (
-        <div className="battleground">
+        <div className={`battleground${playing ? ' move-up' : ''}`}>
             <img className={`triangle ${playing ? 'hidden' : ''}`} src={triangle} alt="Triangle" />
             
             <div className="battleground__weapon weapon--red" data-color="red">
@@ -115,14 +115,14 @@ const Battleground = () => {
                 <span />
                 <img src={grizzlyMode ? yellow1 : yellow2} alt={`${grizzlyMode ? 'Cowboy' : 'Scissors'} selection`} />
             </div>  
-
             {playing && (
                 <>
                 <div className={`battleground__opponent ${computerWeapon}`}>
-                <svg className={`circle ${computerWeapon}`} width="130" height="130" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M65 7.5C96.7564 7.5 122.5 33.2436 122.5 65C122.5 96.7564 96.7564 122.5 65 122.5C33.2436 122.5 7.5 96.7564 7.5 65C7.5 33.2436 33.2436 7.5 65 7.5Z" stroke="#E1E4ED" strokeWidth="12"/>
-                </svg>
-                    <img src={require(`../images/${grizzlyMode ? 'GCN' : 'RPS'}/icon-${computerWeapon}.svg`).default} alt={`${correctName(computerWeapon)} selection`} /> 
+                    <svg className={`circle ${computerWeapon}`} width="130" height="130" viewBox="0 0 130 130"  fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M65 7.5C96.7564 7.5 122.5 33.2436 122.5 65C122.5 96.7564 96.7564 122.5 65 122.5C33.2436 122.5 7.5 96.7564 7.5 65C7.5 33.2436 33.2436 7.5 65 7.5Z" stroke="#E1E4ED" strokeWidth="12"/>
+                    </svg>
+                    <img src={require(`../images/${grizzlyMode ? 'GCN' : 'RPS'}/icon-${computerWeapon}.svg`).default} 
+                    alt={`${correctName(computerWeapon)} selection`} /> 
                 </div> 
 
                 <div className="battleground__result">

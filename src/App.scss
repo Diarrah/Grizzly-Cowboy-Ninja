@@ -1,4 +1,8 @@
+@import 'styles/base/global';
+@import 'styles/base/typography';
+
 @import 'styles/components/score';
 @import 'styles/components/gameMode';
 @import 'styles/components/battleground';
 @import 'styles/components/rules';
+@import 'styles/components/retry';
