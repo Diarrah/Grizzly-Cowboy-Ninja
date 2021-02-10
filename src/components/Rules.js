@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { GameContext } from '../App';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Pagination, Keyboard } from 'swiper';
@@ -12,7 +12,19 @@ SwiperCore.use([Pagination, Keyboard]);
 
 const Rules = () => {
     const { grizzlyMode } = useContext(GameContext);
-    const [moduleOpen, setModuleOpen] = useState(false);
+    const [moduleOpen, setModuleOpen] = useState(false),
+          [firstTime, setFirstTime] = useState(sessionStorage.getItem('first') === 'true' ? true : false);
+
+    useEffect(() => {
+        if(!sessionStorage.getItem('first')) {
+            sessionStorage.setItem('first', 'true')
+            setFirstTime(true) 
+            setModuleOpen(true)
+        } else {
+            sessionStorage.setItem('first', 'false')
+            setFirstTime(false)
+        }
+    }, [])
 
     return (
         <>
