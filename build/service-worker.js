@@ -1,6 +1,4 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.4/workbox-sw.js');
-workbox.setConfig({debug: false});
-
 workbox.precaching
     .precacheAndRoute([
         {"revision":"d474ebc016a346cda811439a7c99d05e","url":"desktop-preview.jpg"},
@@ -8,11 +6,11 @@ workbox.precaching
         {"revision":"9e8a0dffd6eb7a5f0837104c39931231","url":"icons/logo-192.svg"},
         {"revision":"418844579204ca331e73cbbb20a75c24","url":"icons/logo-512.svg"},
         {"revision":"d636b7cd1b9202adf2323bb4f2f9d54b","url":"icons/logo-64.svg"},
-        {"revision":"82367576054b0b34afe957cd9bd3f049","url":"index.html"},
+        {"revision":"276adf971092445d39ff10dfab08ee91","url":"index.html"},
         {"revision":"aebcd32702afbe3354a4c925bdceccbc","url":"static/css/2.96486951.chunk.css"},
         {"revision":"65a66cc86917c32f92300551b3875fb0","url":"static/css/main.f325ae83.chunk.css"},
         {"revision":"698cdda37d35cdd9ff83183ddf55ed86","url":"static/js/2.5f438f70.chunk.js"},
-        {"revision":"f0bef45d218948c2bc26e70663961e7a","url":"static/js/main.8116bb45.chunk.js"},
+        {"revision":"97d5776ea51cea60e934978e88e1a9c5","url":"static/js/main.0bc8d36a.chunk.js"},
         {"revision":"d6f6a4f0eb56890682801076ea08cad6","url":"static/js/runtime-main.5dd4c29e.js"},
         {"revision":"1af730fd0584f34c9c8802a6457fd257","url":"static/media/bear.f47cbef4.svg"},
         {"revision":"1d4dea9c90ffb4ac084bdc0781dfce7b","url":"static/media/c-vs-n.c48137a7.svg"},

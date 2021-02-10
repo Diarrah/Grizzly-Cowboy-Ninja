@@ -15,5 +15,5 @@ const buildSW = () => {
     console.log(`${count} files will be precached, totaling ${size} bytes.`);
   });
 }
-
+ 
 buildSW();
